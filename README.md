@@ -18,5 +18,5 @@ Go to the ArgoCD UI. You will see private-nginx-app.
 Click Refresh. You will see it suddenly find the route.yaml you just pushed.
 Once it is "Synced" (Green), get your URL:
 
-# oc get route my-nginx-route -n my-nginx-project
+#oc get route my-nginx-route -n my-nginx-project
 Paste that URL into your browser. You should see the Bitnami NGINX welcome page.
