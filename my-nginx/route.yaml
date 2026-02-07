@@ -1,0 +1,10 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: my-nginx-route
+spec:
+  to:
+    kind: Service
+    name: my-nginx-svc
+  port:
+    targetPort: 8080
