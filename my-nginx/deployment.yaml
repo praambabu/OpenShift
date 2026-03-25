@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-nginx
+  name: nginx-gitops
+  labels:
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: my-nginx
+      app: nginx
   template:
     metadata:
       labels:
-        app: my-nginx
+        app: nginx
     spec:
       containers:
       - name: nginx
-        image: bitnami/nginx:latest
+        image: docker.io/bitnami/nginx:latest # Your requested image
         ports:
-        - containerPort: 8080
+        - containerPort: 8080 # Bitnami Nginx uses 8080 by default
