@@ -19,15 +19,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-configmap-app
+  labels: 
+    app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-configmap-app
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-configmap-app
+        app: nginx
     spec:
       volumes:
       # Define the volume by pulling data from the ConfigMap above
@@ -35,7 +37,7 @@ spec:
         configMap:
           name: my-website-content
       containers:
-      - name: nginx-web
+      - name: nginx
         image: docker.io/bitnami/nginx:latest
         ports:
         - containerPort: 8080
