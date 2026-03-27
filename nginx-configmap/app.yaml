@@ -1,0 +1,53 @@
+# 1. THE CONFIGMAP (Stores your website content)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-website-content
+data:
+  index.html: |
+    <html>
+      <body style='font-family: sans-serif; text-align: center; margin-top: 50px;'>
+        <h1>Welcome to OpenShift!</h1>
+        <p>This HTML file is not inside the container image.</p>
+        <p>It is being injected live via a Kubernetes ConfigMap!</p>
+      </body>
+    </html>
+
+---
+# 2. THE DEPLOYMENT (Using the ConfigMap)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-configmap-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-configmap-app
+  template:
+    metadata:
+      labels:
+        app: nginx-configmap-app
+    spec:
+      volumes:
+      # Define the volume by pulling data from the ConfigMap above
+      - name: html-volume
+        configMap:
+          name: my-website-content
+      containers:
+      - name: nginx-web
+        image: docker.io/bitnami/nginx:latest
+        ports:
+        - containerPort: 8080
+        # CRITICAL FOR SCALING: You MUST define resource requests/limits!
+        resources:
+          requests:
+            cpu: "50m"      # 50 millicores (5% of 1 CPU core)
+            memory: "64Mi"  # 64 Megabytes of RAM
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        # Mount the ConfigMap volume into the NGINX serving directory
+        - name: html-volume
+          mountPath: /app
