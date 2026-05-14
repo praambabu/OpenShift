@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-gitops
+  name: nginx-deployment
+  namespace: nginx-demo
   labels:
     app: nginx
 spec:
@@ -15,7 +16,19 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: docker.io/bitnami/nginx:latest # Your requested image
-        ports:
-        - containerPort: 8080 # Bitnami Nginx uses 8080 by default
+        - name: nginx
+          # image: nginx:1.25
+          image: docker.io/bitnami/nginx:latest
+          ports:
+            - containerPort: 8080
+          # OpenShift runs as non-root, nginx needs port 8080
+          env:
+            - name: NGINX_PORT
+              value: "8080"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
