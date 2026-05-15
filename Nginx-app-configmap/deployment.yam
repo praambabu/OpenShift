@@ -6,6 +6,7 @@ metadata:
   labels:
     app: nginx-configmap-app
 spec:
+  replicas: 2
   volumes:
       # Define the volume by pulling data from the ConfigMap above
       - name: html-volume
