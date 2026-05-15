@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-configmap-app
+  namespace: nginx-demo-configmap
+  labels:
+    app: nginx-configmap-app
+spec:
+  volumes:
+      # Define the volume by pulling data from the ConfigMap above
+      - name: html-volume
+        configMap:
+          name: my-website-content
+      containers:
+      - name: nginx-web
+        image: docker.io/bitnami/nginx:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m" 
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        - name: html-volume
+          mountPath: /app
