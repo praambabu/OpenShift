@@ -27,3 +27,34 @@ spec:
         volumeMounts:
         - name: html-volume
           mountPath: /app
+
+====================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-app
+  namespace: my-nginx-app
+spec:
+  replicas: 3                    # 3 Nginx pods sharing the same storage
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: web-content
+              mountPath: /usr/share/nginx/html   # Nginx serves from here
+      volumes:
+        - name: web-content
+          persistentVolumeClaim:
+            claimName: nginx-storage             # Mount our ODF PVC
+
