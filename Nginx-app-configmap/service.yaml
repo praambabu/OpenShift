@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  namespace: nginx-demo-configmap
+  namespace: proj-configmap
 spec:
   selector:
     app: web-app
