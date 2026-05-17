@@ -10,6 +10,7 @@ data:
         <h1>Welcome to OpenShift!</h1>
         <p>This HTML file is not inside the container image.</p>
         <p>It is being injected live via a Kubernetes ConfigMap!</p>
+        <p>Red Hat OpenShift!</p>
       </body>
     </html>
 
