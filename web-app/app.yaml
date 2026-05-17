@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: proj-99
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-website-content
+  namespace: proj-99
+data:
+  index.html: |
+    <html>
+      <body style='font-family: sans-serif; text-align: center; margin-top: 50px;'>
+        <h1>Welcome to OpenShift!</h1>
+        <p>This HTML file is not inside the container image.</p>
+        <p>It is being injected live via a Kubernetes ConfigMap!</p>
+        <h1>Red hat OpenShift!</h1>
+      </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-app
+  namespace: proj-99
+  labels: 
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+      - name: html-volume
+        configMap:
+          name: my-website-content
+      containers:
+      - name: nginx
+        image: docker.io/bitnami/nginx:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        - name: html-volume
+          mountPath: /app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app-service
+  namespace: proj-99
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: web-app-route
+  namespace: proj-99
+spec:
+  to:
+    kind: Service
+    name: web-app-service
+  port:
+    targetPort: 8080
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-admin-binding
+  namespace: proj-99
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: openshift-gitops-argocd-application-controller
+  namespace: openshift-gitops
