@@ -40,7 +40,7 @@ spec:
       - name: nginx-web
         image: docker.io/bitnami/nginx:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8090
         # CRITICAL FOR SCALING: You MUST define resource requests/limits!
         resources:
           requests:
