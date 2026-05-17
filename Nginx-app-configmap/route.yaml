@@ -8,7 +8,7 @@ spec:
     kind: Service
     name: nginx-service
   port:
-    targetPort: 8080
+    targetPort: 8090
 
   #tls:
     #termination: edge
