@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: my-website-content
+  namespace: nginx-demo-configmap
 data:
   index.html: |
     <html>
