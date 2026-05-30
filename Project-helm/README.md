@@ -1,28 +1,33 @@
-<img width="924" height="356" alt="image" src="https://github.com/user-attachments/assets/dc3c3e01-e416-4570-bc06-065106f41fcc" /># helm repo add bitnami https://charts.bitnami.com/bitnami
-# helm repo list
+helm repo add bitnami https://charts.bitnami.com/bitnami
+#
+helm repo list
 NAME    URL                               
 bitnami https://charts.bitnami.com/bitnami
 # 
-# oc project
+
+oc project
 Using project "proj-helm" on server "https://api.crc.testing:6443".
 # 
-# mkdir payment
-# mkdir shipping
 
-# helm create payment
+mkdir payment
+mkdir shipping
+
+helm create payment
 Creating payment
 # 
-# helm create shipping
+
+helm create shipping
 Creating shipping
 #
 
-# helm lint .\payment\
+helm lint .\payment\
 ==> Linting .\payment\
 [INFO] Chart.yaml: icon is recommended
 
 1 chart(s) linted, 0 chart(s) failed
 # 
-# helm lint .\shipping\
+
+helm lint .\shipping\
 ==> Linting .\shipping\
 [INFO] Chart.yaml: icon is recommended
 
@@ -31,7 +36,7 @@ Creating shipping
 
 <img width="924" height="356" alt="image" src="https://github.com/user-attachments/assets/0ce9edcb-8bee-41ab-bc1e-b389a77500f6" />
 
-# helm install payments-service .\payment\
+helm install payments-service .\payment\
 NAME: payments-service
 LAST DEPLOYED: Sat Mar 28 16:58:17 2026
 NAMESPACE: proj-helm
@@ -40,7 +45,8 @@ REVISION: 1
 DESCRIPTION: Install complete
 TEST SUITE: None
 #
-# helm install shipping-service .\shipping\ 
+
+helm install shipping-service .\shipping\ 
 NAME: shipping-service
 LAST DEPLOYED: Sat Mar 28 18:34:34 2026
 NAMESPACE: proj-helm
@@ -49,7 +55,8 @@ REVISION: 1
 DESCRIPTION: Install complete
 TEST SUITE: None
 # 
-# helm list
+
+helm list
 NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
 payments-service        proj-helm       1               2026-03-28 16:58:17.665458 +0530 IST    deployed        payment-0.1.0   1.0.0      
 shipping-service        proj-helm       1               2026-03-28 18:34:34.5951192 +0530 IST   deployed        shipping-0.1.0  1.0.0      
