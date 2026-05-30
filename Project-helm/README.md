@@ -1,4 +1,4 @@
-##helm repo add bitnami https://charts.bitnami.com/bitnami
+## helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm repo list
 NAME    URL                               
