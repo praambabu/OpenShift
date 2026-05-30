@@ -55,14 +55,6 @@ REVISION: 1
 DESCRIPTION: Install complete
 TEST SUITE: None
 
-##helm list
-NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
-payments-service        proj-helm       1               2026-03-28 16:58:17.665458 +0530 IST    deployed        payment-0.1.0   1.0.0      
-shipping-service        proj-helm       1               2026-03-28 18:34:34.5951192 +0530 IST   deployed        shipping-0.1.0  1.0.0      
-test-nginx              proj-helm       1               2026-03-28 09:37:02.3097515 +0530 IST   deployed        nginx-22.6.10   1.29.7     
-
-
 <img width="1702" height="206" alt="image" src="https://github.com/user-attachments/assets/f0604a38-d0fe-4033-be0f-229bb4095365" />
-
 
 <img width="1186" height="442" alt="image" src="https://github.com/user-attachments/assets/d1759b4e-de28-4dde-9381-dfd8cbf6a056" />
